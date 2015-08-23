@@ -20,7 +20,7 @@
 #define ENABLE_SSE2 /**/
 
 /* Define to use SSE4 instructions */
-/* #undef ENABLE_SSE4 */
+#define ENABLE_SSE4
 
 /* Define to 1 if you have the `aligned_alloc' function. */
 #define HAVE_ALIGNED_ALLOC 1
