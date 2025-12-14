@@ -180,22 +180,22 @@ namespace tta
 		TTAuint32 get_rate();
 
 	protected:
-		TTA_codec decoder[MAX_NCH]; // decoder (1 per channel)
-		TTAint8 data[8];	// decoder initialization data
-		TTA_fifo fifo;
-		TTA_codec *decoder_last;
-		bool password_set;	// password protection flag
-		TTAuint64 *seek_table; // the playing position table
-		TTAuint32 format;	// tta data format
-		TTAuint32 rate;	// bitrate (kbps)
-		TTAuint64 offset;	// data start position (header size, bytes)
-		TTAuint32 frames;	// total count of frames
-		TTAuint32 depth;	// bytes per sample
-		TTAuint32 flen_std;	// default frame length in samples
-		TTAuint32 flen_last;	// last frame length in samples
-		TTAuint32 flen;	// current frame length in samples
-		TTAuint32 fnum;	// currently playing frame index
-		TTAuint32 fpos;	// the current position in frame
+		TTA_codec decoder[MAX_NCH] = {}; // decoder (1 per channel)
+		TTAint8 data[8] = {};	// decoder initialization data
+		TTA_fifo fifo ={};
+		TTA_codec *decoder_last = nullptr;
+		bool password_set = false;	// password protection flag
+		TTAuint64 *seek_table = nullptr; // the playing position table
+		TTAuint32 format = 0;	// tta data format
+		TTAuint32 rate = 0;	// bitrate (kbps)
+		TTAuint64 offset = 0;	// data start position (header size, bytes)
+		TTAuint32 frames = 0;	// total count of frames
+		TTAuint32 depth = 0;	// bytes per sample
+		TTAuint32 flen_std = 0;	// default frame length in samples
+		TTAuint32 flen_last = 0;	// last frame length in samples
+		TTAuint32 flen = 0;	// current frame length in samples
+		TTAuint32 fnum = 0;	// currently playing frame index
+		TTAuint32 fpos =0;	// the current position in frame
 
 		bool read_seek_table();
 		void frame_init(TTAuint32 frame, bool seek_needed);
@@ -216,22 +216,22 @@ namespace tta
 		TTAuint32 get_rate();
 
 	protected:
-		TTA_codec encoder[MAX_NCH]; // encoder (1 per channel)
-		TTAint8 data[8];	// encoder initialization data
-		TTA_fifo fifo;
-		TTA_codec *encoder_last;
-		TTAuint64 *seek_table; // the playing position table
-		TTAuint32 format;	// tta data format
-		TTAuint32 rate;	// bitrate (kbps)
-		TTAuint64 offset;	// data start position (header size, bytes)
-		TTAuint32 frames;	// total count of frames
-		TTAuint32 depth;	// bytes per sample
-		TTAuint32 flen_std;	// default frame length in samples
-		TTAuint32 flen_last;	// last frame length in samples
-		TTAuint32 flen;	// current frame length in samples
-		TTAuint32 fnum;	// currently playing frame index
-		TTAuint32 fpos;	// the current position in frame
-		TTAuint32 shift_bits; // packing int to pcm
+		TTA_codec encoder[MAX_NCH] = {}; // encoder (1 per channel)
+		TTAint8 data[8] = {};	// encoder initialization data
+		TTA_fifo fifo = {};
+		TTA_codec *encoder_last = nullptr;
+		TTAuint64 *seek_table = nullptr; // the playing position table
+		TTAuint32 format = 0;	// tta data format
+		TTAuint32 rate = 0;	// bitrate (kbps)
+		TTAuint64 offset = 0;	// data start position (header size, bytes)
+		TTAuint32 frames = 0;	// total count of frames
+		TTAuint32 depth = 0;	// bytes per sample
+		TTAuint32 flen_std = 0;	// default frame length in samples
+		TTAuint32 flen_last = 0;	// last frame length in samples
+		TTAuint32 flen = 0;	// current frame length in samples
+		TTAuint32 fnum = 0;	// currently playing frame index
+		TTAuint32 fpos = 0;	// the current position in frame
+		TTAuint32 shift_bits = 0; // packing int to pcm
 
 		void write_seek_table();
 		void frame_init(TTAuint32 frame);

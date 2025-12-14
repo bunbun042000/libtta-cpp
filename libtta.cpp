@@ -529,6 +529,16 @@ void tta_decoder::init_get_info(TTA_info *info, TTAuint64 pos) {
 	rate = 0;
 
 	// allocate memory for seek table data
+	if (seek_table != NULL)
+	{
+		tta_free(seek_table);
+		seek_table = NULL;
+	}
+	else
+	{
+		// Do nothing
+	}
+
 	seek_table = (TTAuint64 *) tta_malloc(frames * sizeof(TTAuint64));
 	if (seek_table == NULL)
 		throw tta_exception(TTA_MEMORY_ERROR);
@@ -750,7 +760,8 @@ int tta_decoder::process_frame(TTAuint32 in_bytes, TTAuint8 *output,
 
 TTAuint32 tta_decoder::get_rate() { return rate; }
 
-tta_decoder::tta_decoder(TTA_io_callback *iocb) {
+tta_decoder::tta_decoder(TTA_io_callback *iocb) : decoder{}
+{
 	seek_table = NULL;
 	seek_allowed = false;
 	fifo.io = iocb;

@@ -1,4 +1,4 @@
-
+﻿
 #Ignore thumbnails created by Windows
 Thumbs.db
 #Ignore files built by Visual Studio
@@ -31,3 +31,11 @@ _ReSharper*/
 .idea/
 #Nuget packages folder
 packages/
+
+
+*.exe
+*.zip
+*.diagsession
+*.db
+*.opendb
+*.dll

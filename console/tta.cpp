@@ -44,6 +44,21 @@ typedef struct {
 } WAVE_hdr;
 
 typedef struct {
+	TTAuint16 audio_format;
+	TTAuint16 num_channels;
+	TTAuint32 sample_rate;
+	TTAuint32 byte_rate;
+	TTAuint16 block_align;
+	TTAuint16 bits_per_sample;
+} WAVE_fmt_hdr;
+
+typedef struct {
+	TTAuint32 chunk_id;
+	TTAuint32 chunk_size;
+	TTAuint32 format;
+} RIFF_Basic_hdr;
+
+typedef struct {
 	TTAuint32 subchunk_id;
 	TTAuint32 subchunk_size;
 } WAVE_subchunk_hdr;
@@ -104,45 +119,109 @@ int read_wav_hdr(HANDLE infile, WAVE_hdr *wave_hdr, TTAuint32 *subchunk_size) {
 	WAVE_subchunk_hdr subchunk_hdr;
 	TTAuint32 result;
 	TTAuint32 def_subchunk_size = 16;
+	RIFF_Basic_hdr riff_basic_hdr;
+	bool is_exist_fmt_chunk = false;
 
 	// Read WAVE header
-	if (!tta_read(infile, wave_hdr, sizeof(WAVE_hdr), result) || !result)
+	if (!tta_read(infile, &riff_basic_hdr, sizeof(RIFF_Basic_hdr), result) || !result)
+	{
 		return -1;
-
-	if (wave_hdr->audio_format == WAVE_FORMAT_EXTENSIBLE) {
-		WAVE_ext_hdr wave_hdr_ex;
-
-		if (!tta_read(infile, &wave_hdr_ex, sizeof(WAVE_ext_hdr), result) || !result)
-			return -1;
-
-		def_subchunk_size += sizeof(WAVE_ext_hdr);
-		wave_hdr->audio_format = wave_hdr_ex.est.f1;
+	}
+	else
+	{
+		wave_hdr->chunk_id = riff_basic_hdr.chunk_id;
+		wave_hdr->chunk_size = riff_basic_hdr.chunk_size;
+		wave_hdr->format = riff_basic_hdr.format;
 	}
 
-	// Skip extra format bytes
-	if (wave_hdr->subchunk_size > def_subchunk_size) {
-		TTAuint32 extra_len = wave_hdr->subchunk_size - def_subchunk_size;
-
-		if (tta_seek(infile, extra_len) == INVALID_SET_FILE_POINTER)
-			return -1;
-	}
-
-	// Skip unsupported chunks
+	// Other chunks
 	while (1) {
-		TTAuint8 chunk_id[5];
 
 		if (!tta_read(infile, &subchunk_hdr, sizeof(WAVE_subchunk_hdr), result) || !result)
+		{
 			return -1;
+		}
+		else
+		{
+			// Do nothing
+		}
 
-		if (subchunk_hdr.subchunk_id == data_SIGN) break;
-		if (tta_seek(infile, subchunk_hdr.subchunk_size) == INVALID_SET_FILE_POINTER)
-			return -1;
+		if (subchunk_hdr.subchunk_id == data_SIGN)
+		{
+			*subchunk_size = subchunk_hdr.subchunk_size;
+			break;
+		}
+		else if (subchunk_hdr.subchunk_id == fmt_SIGN)
+		{
+			WAVE_fmt_hdr wave_fmt_hdr;
+			if (!tta_read(infile, &wave_fmt_hdr, sizeof(WAVE_fmt_hdr), result) || !result)
+			{
+				return -1;
+			}
+			else
+			{
+				wave_hdr->subchunk_id = subchunk_hdr.subchunk_id;
+				wave_hdr->subchunk_size = subchunk_hdr.subchunk_size;
+				wave_hdr->audio_format = wave_fmt_hdr.audio_format;
+				wave_hdr->num_channels = wave_fmt_hdr.num_channels;
+				wave_hdr->sample_rate = wave_fmt_hdr.sample_rate;
+				wave_hdr->byte_rate = wave_fmt_hdr.byte_rate;
+				wave_hdr->block_align = wave_fmt_hdr.block_align;
+				wave_hdr->bits_per_sample = wave_fmt_hdr.bits_per_sample;
+				if (wave_hdr->audio_format == WAVE_FORMAT_EXTENSIBLE) {
+					WAVE_ext_hdr wave_hdr_ex;
 
-		tta_memcpy(chunk_id, &subchunk_hdr.subchunk_id, 4);
-		chunk_id[4] = 0;
+					if (!tta_read(infile, &wave_hdr_ex, sizeof(WAVE_ext_hdr), result) || !result)
+						return -1;
+
+					def_subchunk_size += sizeof(WAVE_ext_hdr);
+					wave_hdr->audio_format = wave_hdr_ex.est.f1;
+				}
+				// Skip extra format bytes
+				if (subchunk_hdr.subchunk_size > sizeof(WAVE_fmt_hdr)) {
+					TTAuint32 extra_len = subchunk_hdr.subchunk_size - sizeof(WAVE_fmt_hdr);
+
+					if (tta_seek_from_here(infile, extra_len) == INVALID_SET_FILE_POINTER)
+					{
+						return -1;
+					}
+					else
+					{
+						// Do nothing
+					}
+				}
+				else
+				{
+					// Do nothing
+				}
+				is_exist_fmt_chunk = true;
+				continue;
+			}
+		}
+		else
+		{
+			if (tta_seek_from_here(infile, subchunk_hdr.subchunk_size) == INVALID_SET_FILE_POINTER)
+			{
+				return -1;
+			}
+			else
+			{
+				// Do nothing
+			}
+		}
 	}
 
-	*subchunk_size = subchunk_hdr.subchunk_size;
+
+
+	if (!is_exist_fmt_chunk)
+	{
+		return -1;
+	}
+	else
+	{
+		// Do nothing
+	}
+	
 	return 0;
 } // read_wav_hdr
 

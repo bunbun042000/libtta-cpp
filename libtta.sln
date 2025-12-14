@@ -1,14 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libtta", "libtta.vcxproj", "{B3DF599C-1C8F-451D-91E4-DD766210DA1F}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		dll_Release|Win32 = dll_Release|Win32
+		dll_Release|x64 = dll_Release|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
@@ -17,6 +22,10 @@ Global
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Debug|Win32.Build.0 = Debug|Win32
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Debug|x64.ActiveCfg = Debug|x64
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Debug|x64.Build.0 = Debug|x64
+		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.dll_Release|Win32.ActiveCfg = dll_Release|Win32
+		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.dll_Release|Win32.Build.0 = dll_Release|Win32
+		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.dll_Release|x64.ActiveCfg = dll_Release|x64
+		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.dll_Release|x64.Build.0 = dll_Release|x64
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Release|Win32.ActiveCfg = Release|Win32
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Release|Win32.Build.0 = Release|Win32
 		{B3DF599C-1C8F-451D-91E4-DD766210DA1F}.Release|x64.ActiveCfg = Release|x64
