@@ -25,11 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define MUL_FRAME_TIME(x) (256 * (x) / 245) // = x * FRAME_TIME
 
-extern void writer_start(TTA_fifo* s);
-extern TTAuint32 write_tta_header(TTA_fifo* s, TTA_info* info);
-extern __forceinline void flush_bit_cache(TTA_fifo* s);
-extern void writer_done(TTA_fifo* s);
-extern void writer_skip_bytes(TTA_fifo* s, TTAuint32 size);
+void writer_start(TTA_fifo* s);
+TTAuint32 write_tta_header(TTA_fifo* s, TTA_info* info);
+__forceinline void flush_bit_cache(TTA_fifo* s);
+void writer_done(TTA_fifo* s);
+void writer_skip_bytes(TTA_fifo* s, TTAuint32 size);
 
 void tta::tta_encoder_extend::init_set_info_for_memory(TTA_info* info, TTAuint64 pos) {
 	bool isAllocateSeektable = false;
