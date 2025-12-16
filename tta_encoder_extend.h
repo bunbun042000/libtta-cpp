@@ -32,13 +32,13 @@ namespace tta
 		using tta::tta_encoder::tta_encoder;
 
 		TTAuint64 getHeaderOffset(void) const { return offset; };
-		TTAuint64 getHeaderAndSeekTableOffset(void) const { return header_and_seektable_offset; };
+		TTAuint64 getHeaderAndSeekTableOffset(void) const { return m_header_and_seektable_offset; };
 		void init_set_info_for_memory(TTA_info* info, TTAuint64 pos);
 		void preliminaryFinish(void);
 		void flushFifo(void);
 
 	protected:
-		TTAuint64 header_and_seektable_offset = 0;	// data start position (header and seektable size, bytes)
+		TTAuint64 m_header_and_seektable_offset = 0;	// data start position (header and seektable size, bytes)
 	};
 
 }

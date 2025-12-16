@@ -84,11 +84,11 @@ void tta::tta_encoder_extend::init_set_info_for_memory(TTA_info* info, TTAuint64
 	if (info->samples != MAX_SAMPLES)
 	{
 		writer_skip_bytes(&fifo, (frames + 1) * sizeof(TTAuint64));
-		header_and_seektable_offset = offset + (frames + 1) * sizeof(TTAuint64);
+		m_header_and_seektable_offset = offset + (frames + 1) * sizeof(TTAuint64);
 	}
 	else
 	{
-		header_and_seektable_offset = offset;
+		m_header_and_seektable_offset = offset;
 	}
 
 
