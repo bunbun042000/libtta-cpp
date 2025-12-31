@@ -21,6 +21,9 @@
     <ClCompile Include="libtta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tta_encoder_extend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -30,6 +33,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libtta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tta_encoder_extend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
